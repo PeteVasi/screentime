@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 60px;
+  padding: 5px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.timer-row {
+  padding-top: 25px;
+}
+
+.timer-name {
+  font-size: xx-large;
+  font-weight: bold;
+  padding-right: 15px;
+  display: inline-block;
+}
+
+.timer-remains {
+  font-size: 5em;
+  font-weight: bold;
+  display: inline-block;
+  padding-right: 15px;
+}
+
+.timer-timeup {
+  font-size: 5em;
+  font-weight: bold;
+  background-color: red;
+  color: white;
+  display: inline-block;
+  padding: 5px;
+}
+
+.timer-buttons {
+  display: inline-block;
+  padding-left: 15px;
+}
+
+.timer-buttons button {
+  font-size: 3em;
+}
