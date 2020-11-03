@@ -4,7 +4,10 @@ import { TimerRow } from './TimerRow';
 export class TimerSet extends Component {
     constructor(props) {
         super(props);
-        this.state = { loaded: false };
+        this.state = {
+            loaded: false,
+            isAdminMode: this.props.isAdminMode
+        };
         this.updateTimeLeft = this.updateTimeLeft.bind(this);
         this.resetUserTimeOnNewDay = this.resetUserTimeOnNewDay.bind(this);
         this.checkDayPassed = this.checkDayPassed.bind(this);
@@ -44,6 +47,14 @@ export class TimerSet extends Component {
         setInterval(this.resetUserTimeOnNewDay, 60 * 1000);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.isAdminMode !== prevProps.isAdminMode) {
+            this.setState({
+                isAdminMode: this.props.isAdminMode
+            });
+        }
+    }
+
     render() {
         if (!this.state.loaded) {
             return <div>Loading...</div>;
@@ -57,6 +68,7 @@ export class TimerSet extends Component {
                                       name={user.name}
                                       timeRemaining={user.timeLeft}
                                       timeUpdated={(t) => { this.updateTimeLeft(user.name, t); }}
+                                      isAdminMode={this.state.isAdminMode}
                                       />
                         );
                         }

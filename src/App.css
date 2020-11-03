@@ -48,3 +48,8 @@
 .timer-buttons button {
   font-size: 3em;
 }
+
+.admin-area {
+  display: inline-block;
+  padding-top: 100px;
+}

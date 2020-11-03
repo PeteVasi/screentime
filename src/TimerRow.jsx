@@ -9,10 +9,13 @@ export class TimerRow extends Component {
             elapsed: 0,
             isRunning: false,
             isJustExpired: false,
-            isExpired: (this.props.timeRemaining <= 0)
+            isExpired: (this.props.timeRemaining <= 0),
+            isAdminMode: this.props.isAdminMode
         };
         this.startTimer = this.startTimer.bind(this);
         this.stopTimer = this.stopTimer.bind(this);
+        this.plus10 = this.plus10.bind(this);
+        this.minus10 = this.minus10.bind(this);
         this.tick = this.tick.bind(this);
         this.confirmExpired = this.confirmExpired.bind(this);
     }
@@ -23,13 +26,14 @@ export class TimerRow extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (!this.state.isRunning && this.props.timeRemaining !== prevProps.timeRemaining) {
+        if (!this.state.isRunning && (this.props.timeRemaining !== prevProps.timeRemaining || this.props.isAdminMode !== prevProps.isAdminMode)) {
             this.setState({
                 remaining: this.props.timeRemaining,
                 elapsed: 0,
                 isRunning: false,
                 isJustExpired: false,
-                isExpired: (this.props.timeRemaining <= 0)
+                isExpired: (this.props.timeRemaining <= 0),
+                isAdminMode: this.props.isAdminMode
             });
         }
     }
@@ -53,6 +57,12 @@ export class TimerRow extends Component {
                         <button onClick={this.confirmExpired}>Ok</button>
                     </div>
                 }
+                {this.state.isAdminMode &&
+                    <div className='timer-buttons'>
+                        <button onClick={this.minus10}>-10</button>
+                        <button onClick={this.plus10}>+10</button>
+                    </div>
+                }
             </div>
         );
     }
@@ -66,6 +76,22 @@ export class TimerRow extends Component {
         clearInterval(this.timer);
         var remains = this.state.remaining - this.state.elapsed;
         this.setState({remaining: remains, elapsed: 0, isRunning: false});
+    }
+
+    plus10() {
+        var remains = this.state.remaining + (10 * 60 * 1000);
+        this.setState({remaining: remains, elapsed: 0});
+        if(this.props.timeUpdated) {
+            this.props.timeUpdated(remains);
+        }
+    }
+
+    minus10() {
+        var remains = this.state.remaining - (10 * 60 * 1000);
+        this.setState({remaining: (remains < 0 ? 0 : remains), elapsed: 0});
+        if(this.props.timeUpdated) {
+            this.props.timeUpdated(remains < 0 ? 0 : remains);
+        }
     }
 
     tick() {
