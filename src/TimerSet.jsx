@@ -10,7 +10,7 @@ export class TimerSet extends Component {
         this.checkDayPassed = this.checkDayPassed.bind(this);
         this.getFromCookie = this.getFromCookie.bind(this);
         this.setCookie = this.setCookie.bind(this);
-        this.DEFAULT_TIME_LEFT = 3 * 60 * 60 * 1000;
+        this.DEFAULT_TIME_LEFT = 2.5 * 60 * 60 * 1000;
         //this.DEFAULT_TIME_LEFT = 10000;  // For testing purposes...
     }
 
@@ -21,10 +21,6 @@ export class TimerSet extends Component {
             users = JSON.parse(usersJson);
         } else {
             users = [
-                {
-                    name: "Kira",
-                    timeLeft: this.DEFAULT_TIME_LEFT
-                },
                 {
                     name: "Ethan",
                     timeLeft: this.DEFAULT_TIME_LEFT
